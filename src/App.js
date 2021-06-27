@@ -15,7 +15,7 @@ const ISSUER = "https://dev-19217834.okta.com/oauth2/default"
 const config = {
   clientId: CLIENT_ID,
   issuer: ISSUER,
-  redirectUri: 'http://localhost:8080/login/callback',
+  redirectUri: 'http://localhost:3000/login/callback',
   scopes: ['openid', 'profile', 'email'],
   pkce: true
 };
