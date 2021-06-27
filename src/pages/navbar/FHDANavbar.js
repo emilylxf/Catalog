@@ -4,15 +4,11 @@ import { Nav, Navbar } from "react-bootstrap";
 import { useOktaAuth } from '@okta/okta-react'
 import da_logo from "../../assets/pic/fhdalogo.jpg";
 
-
-
 const FHDANavbar = ({ setCorsErrorModalOpen }) => {
   console.log(useOktaAuth())
   const { authState, oktaAuth } = useOktaAuth();
   
   const isCorsError = (err) => (err.name === 'AuthApiError' && !err.errorCode && err.xhr.message === 'Failed to fetch');
-
-  const login = () => oktaAuth.signInWithRedirect();
   const logout = async () => {
     try {
       await oktaAuth.signOut();
@@ -44,7 +40,7 @@ const FHDANavbar = ({ setCorsErrorModalOpen }) => {
             <Link className="nav-link" onClick={logout} to='/'>Logout</Link>
           )}
           {!authState.isPending && !authState.isAuthenticated && (
-            <Link className="nav-link" onClick={login} to='/login/callback'>Login</Link>
+            <Link className="nav-link" to='/login'>Login</Link>
           )}
           
         </Nav>

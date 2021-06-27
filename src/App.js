@@ -4,10 +4,12 @@ import Catalog from "./pages/catalog/Catalog";
 import Story from "./pages/story/Story";
 import About from "./pages/about/About";
 import FHDANavbar from "./pages/navbar/FHDANavbar";
+import Login from "./pages/login/Login";
 import { Route, useHistory, Switch } from "react-router-dom";
 import "./assets/css/App.css";
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
 import { Security, LoginCallback } from '@okta/okta-react';
+var OktaSignIn = require('@okta/okta-signin-widget');
 
 
 const CLIENT_ID = "0oa13dfryq3ffhUKb5d7"
@@ -28,6 +30,16 @@ export default function App() {
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {
     history.replace(toRelativeUrl(originalUri || '/', window.location.origin));
   };
+  const oktaSignInConfig = {
+    baseUrl: 'https://dev-19217834.okta.com',
+    clientId: oktaAuth.options.clientId,
+    issuer: oktaAuth.options.issuer,
+    redirectUri: oktaAuth.options.redirectUri,
+    authClient: oktaAuth,
+    features: {
+       registration: true // REQUIRED
+    }
+  }
 
   return (
     <div className="app">
@@ -39,7 +51,7 @@ export default function App() {
           <Route exact path="/catalog" render={(routerProps) => < Catalog routerProps={routerProps} />} />
           <Route exact path="/story" render={(routerProps) => < Story routerProps={routerProps} />} />
           <Route exact path="/about" render={(routerProps) => < About routerProps={routerProps} />} />
-          <Route path="/login/callback" render={(routerProps) => < LoginCallback routerProps={routerProps} />} />
+          <Route path='/login' render={() => <Login config={oktaSignInConfig} />} />
         </Switch>
       </Security>
     </div>
