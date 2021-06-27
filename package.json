@@ -2,7 +2,7 @@
   "name": "learn",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://fhda.github.io/Frontend/",
+  "homepage": ".",
   "dependencies": {
     "@okta/okta-auth-js": "^5.1.1",
     "@okta/okta-react": "^6.0.0",
