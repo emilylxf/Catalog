@@ -35,7 +35,6 @@ export default function App() {
     clientId: oktaAuth.options.clientId,
     issuer: oktaAuth.options.issuer,
     redirectUri: oktaAuth.options.redirectUri,
-    authClient: oktaAuth,
     features: {
        registration: true // REQUIRED
     }
