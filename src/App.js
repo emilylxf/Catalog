@@ -3,30 +3,45 @@ import Home from "./pages/home/Home";
 import Catalog from "./pages/catalog/Catalog";
 import Story from "./pages/story/Story";
 import About from "./pages/about/About";
-import { Route, Link } from "react-router-dom";
+import FHDANavbar from "./pages/navbar/FHDANavbar";
+import { Route, useHistory, Switch } from "react-router-dom";
 import "./assets/css/App.css";
-import { Nav, Navbar } from "react-bootstrap";
-import da_logo from "./assets/pic/fhdalogo.jpg";
+import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
+import { Security, LoginCallback } from '@okta/okta-react';
+
+
+const CLIENT_ID = "0oa13dfryq3ffhUKb5d7"
+const ISSUER = "https://dev-19217834.okta.com/oauth2/default"
+const config = {
+  clientId: CLIENT_ID,
+  issuer: ISSUER,
+  redirectUri: 'http://localhost:8080/login/callback',
+  scopes: ['openid', 'profile', 'email'],
+  pkce: true
+};
+const oktaAuth = new OktaAuth(config);
 
 export default function App() {
-  return (
-    <div className="App">
-      <Navbar bg="red" variant="dark" className="navbar">
-        <Link className="navbar-brand" to="/">
-          <img className="navbar-img" src={da_logo} alt="" /> FHDATime
-        </Link>
-        <Nav className="mr-auto">
-          <Link className="nav-link" to="/">Home</Link>
-          <Link className="nav-link" to="/catalog">Catalog</Link>
-          <Link className="nav-link" to="/story">Story</Link>
-          <Link className="nav-link" to="/about">About</Link>
-        </Nav>
-      </Navbar>
 
-      <Route exact path="/" render={ (routerProps) => < Home routerProps={routerProps} />} />
-      <Route exact path="/catalog" render={ (routerProps) => < Catalog routerProps={routerProps} />} />
-      <Route exact path="/story" render={ (routerProps) => < Story routerProps={routerProps} />} />
-      <Route exact path="/about" render={ (routerProps) => < About routerProps={routerProps} />} />
+  const [corsErrorModalOpen, setCorsErrorModalOpen] = React.useState(false);
+  const history = useHistory();
+  const restoreOriginalUri = async (_oktaAuth, originalUri) => {
+    history.replace(toRelativeUrl(originalUri || '/', window.location.origin));
+  };
+
+  return (
+    <div className="app">
+      <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
+        <FHDANavbar {...{ setCorsErrorModalOpen }} />
+      
+        <Switch>
+          <Route exact path="/" render={(routerProps) => < Home routerProps={routerProps} />} />
+          <Route exact path="/catalog" render={(routerProps) => < Catalog routerProps={routerProps} />} />
+          <Route exact path="/story" render={(routerProps) => < Story routerProps={routerProps} />} />
+          <Route exact path="/about" render={(routerProps) => < About routerProps={routerProps} />} />
+          <Route path="/login/callback" render={(routerProps) => < LoginCallback routerProps={routerProps} />} />
+        </Switch>
+      </Security>
     </div>
   );
 }
