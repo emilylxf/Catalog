@@ -5,7 +5,6 @@ import { useOktaAuth } from '@okta/okta-react'
 import da_logo from "../../assets/pic/fhdalogo.jpg";
 
 const FHDANavbar = ({ setCorsErrorModalOpen }) => {
-  console.log(useOktaAuth())
   const { authState, oktaAuth } = useOktaAuth();
   
   const isCorsError = (err) => (err.name === 'AuthApiError' && !err.errorCode && err.xhr.message === 'Failed to fetch');
