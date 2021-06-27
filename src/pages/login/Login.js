@@ -9,10 +9,6 @@ const Login = ({ config }) => {
   const { oktaAuth, authState } = useOktaAuth();
 
   const onSuccess = (tokens) => {
-    const originalUri = oktaAuth.getOriginalUri();
-    if (originalUri === DEFAULT_ORIGINAL_URI) {
-      this.oktaAuth.setOriginalUri('/');
-    }
     oktaAuth.handleLoginRedirect(tokens);
   };
 

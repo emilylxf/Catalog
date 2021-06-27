@@ -14,7 +14,7 @@ import config from './config';
 const oktaAuth = new OktaAuth(config.oktaConfig);
 
 export default function App() {
-  console.log(config.oktaSignInConfig)
+  console.log(oktaAuth)
   const [corsErrorModalOpen, setCorsErrorModalOpen] = React.useState(false);
   const history = useHistory();
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {
