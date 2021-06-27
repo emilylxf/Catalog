@@ -17,7 +17,7 @@ const ISSUER = "https://dev-19217834.okta.com/oauth2/default"
 const config = {
   clientId: CLIENT_ID,
   issuer: ISSUER,
-  redirectUri: window.origin+'/login/callback',
+  redirectUri: window.origin,
   scopes: ['openid', 'profile', 'email'],
   pkce: true
 };
