@@ -3,10 +3,16 @@ import { Redirect } from 'react-router-dom';
 import OktaSignInWidget from './OktaSignInWidget';
 import { useOktaAuth } from '@okta/okta-react';
 
+const DEFAULT_ORIGINAL_URI = window.location.origin;
+
 const Login = ({ config }) => {
   const { oktaAuth, authState } = useOktaAuth();
 
   const onSuccess = (tokens) => {
+    const originalUri = oktaAuth.getOriginalUri();
+    if (originalUri === DEFAULT_ORIGINAL_URI) {
+      this.oktaAuth.setOriginalUri('/');
+    }
     oktaAuth.handleLoginRedirect(tokens);
   };
 
