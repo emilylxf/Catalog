@@ -1,32 +1,40 @@
 import React from "react";
+import "./assets/css/App.css";
 import Home from "./pages/home/Home";
 import Catalog from "./pages/catalog/Catalog";
 import Story from "./pages/story/Story";
 import About from "./pages/about/About";
-import { Route, Link } from "react-router-dom";
-import "./assets/css/App.css";
-import { Nav, Navbar } from "react-bootstrap";
-import da_logo from "./assets/pic/fhdalogo.jpg";
+import FHDANavbar from "./pages/navbar/FHDANavbar";
+import Login from "./pages/login/Login";
+import { Route, useHistory, Switch } from "react-router-dom";
+import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
+import { Security } from '@okta/okta-react';
+import config from './config';
+
+const oktaAuth = new OktaAuth(config.oktaConfig);
 
 export default function App() {
-  return (
-    <div className="App">
-      <Navbar bg="red" variant="dark" className="navbar">
-        <Link className="navbar-brand" to="/">
-          <img className="navbar-img" src={da_logo} alt="" /> FHDATime
-        </Link>
-        <Nav className="mr-auto">
-          <Link className="nav-link" to="/">Home</Link>
-          <Link className="nav-link" to="/catalog">Catalog</Link>
-          <Link className="nav-link" to="/story">Story</Link>
-          <Link className="nav-link" to="/about">About</Link>
-        </Nav>
-      </Navbar>
+  console.log(oktaAuth)
+  const [corsErrorModalOpen, setCorsErrorModalOpen] = React.useState(false);
+  const history = useHistory();
+  const restoreOriginalUri = async (_oktaAuth, originalUri) => {
+    history.replace(toRelativeUrl(originalUri || '/', window.location.origin));
+  };
+  
 
-      <Route exact path="/" render={ (routerProps) => < Home routerProps={routerProps} />} />
-      <Route exact path="/catalog" render={ (routerProps) => < Catalog routerProps={routerProps} />} />
-      <Route exact path="/story" render={ (routerProps) => < Story routerProps={routerProps} />} />
-      <Route exact path="/about" render={ (routerProps) => < About routerProps={routerProps} />} />
+  return (
+    <div className="app">
+      <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
+        <FHDANavbar {...{ setCorsErrorModalOpen }} />
+      
+        <Switch>
+          <Route exact path="/" render={(routerProps) => < Home routerProps={routerProps} />} />
+          <Route exact path="/catalog" render={(routerProps) => < Catalog routerProps={routerProps} />} />
+          <Route exact path="/story" render={(routerProps) => < Story routerProps={routerProps} />} />
+          <Route exact path="/about" render={(routerProps) => < About routerProps={routerProps} />} />
+          <Route path='/login' render={() => <Login config={config.oktaSignInConfig} />} />
+        </Switch>
+      </Security>
     </div>
   );
 }
