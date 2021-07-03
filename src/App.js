@@ -3,6 +3,7 @@ import "./assets/css/App.css";
 import Home from "./pages/home/Home";
 import Catalog from "./pages/catalog/Catalog";
 import Story from "./pages/story/Story";
+import StoryWriter from "./pages/story/StoryWriter.js";
 import About from "./pages/about/About";
 import FHDANavbar from "./pages/navbar/FHDANavbar";
 import Login from "./pages/login/Login";
@@ -33,6 +34,7 @@ export default function App() {
           <Route exact path="/story" render={(routerProps) => < Story routerProps={routerProps} />} />
           <Route exact path="/about" render={(routerProps) => < About routerProps={routerProps} />} />
           <Route path='/login' render={() => <Login config={config.oktaSignInConfig} />} />
+          <Route path='/story/new' render={() => <StoryWriter/>} />
         </Switch>
       </Security>
     </div>
