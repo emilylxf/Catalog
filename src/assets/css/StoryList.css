@@ -1,0 +1,10 @@
+.storyList {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 15px;
+}
+
+.storyList .storyCard {
+  width: 21rem;
+}

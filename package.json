@@ -4,6 +4,8 @@
   "private": true,
   "homepage": ".",
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
     "@okta/okta-auth-js": "^5.1.1",
     "@okta/okta-react": "^6.0.0",
     "@okta/okta-signin-widget": "^5.7.3",
@@ -15,6 +17,8 @@
     "axios": "^0.21.1",
     "bootstrap": "^5.0.0",
     "dante3": "^1.0.5",
+    "material-ui-icons": "^1.0.0-beta.36",
+    "mui-rte": "^1.29.0",
     "react": "^17.0.2",
     "react-animate-on-scroll": "^2.1.5",
     "react-bootstrap": "^1.6.0",

@@ -7,6 +7,7 @@ import {
   Button
   } from 'react-bootstrap';
 import { Link } from "react-router-dom";
+import '../../assets/css/StoryList.css'
 
 const example_articles = [
   {
@@ -84,8 +85,7 @@ class StoryList extends React.Component {
     }
     for (var i of demo_filter[filter_key]) {
       tempList.push(
-        <Card style={{ width: '18rem' }}>
-          <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
+        <Card className="storyCard">
           <Card.Body>
             <Card.Title>{example_articles[i].article_title}</Card.Title>
             <Card.Text>
@@ -135,7 +135,7 @@ class StoryList extends React.Component {
             </Dropdown.Menu>
           </Dropdown>
         </div>
-        <div style={{display: 'flex', align_items: 'center'}}>
+        <div className="storyList">
           {this.state.renderList}
         </div>
       </div>
