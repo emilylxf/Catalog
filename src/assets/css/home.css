@@ -1,5 +1,4 @@
-.home{
-  
+.home {
   height: 80vh;
   display: flex;
   flex-wrap: wrap;
@@ -7,7 +6,7 @@
   justify-content: center;
 }
 
-.container{
+.container {
   height: 60%;
   display: flex;
   flex-wrap: wrap;
@@ -15,7 +14,7 @@
   justify-content: center;
 }
 
-.left{
+.left {
   flex: 1;
   width: 100%;
   height: 100%;
@@ -24,13 +23,12 @@
   justify-content: center;
 }
 
-
-img{
+.home .container .left img {
   width: 100%;
   height: auto;
 }
 
-.right{
+.right {
   flex: 1;
   height: 100%;
   display: flex;
@@ -39,23 +37,22 @@ img{
   justify-content: space-between;
 }
 
-
-p.description{
+p.description {
   font-size: 17px;
 }
 
-.divider{
+.divider {
   width: 80%;
   height: 1px;
   opacity: 0.2;
   background-color: grey;
 }
 
-p.content{
+p.content {
   font-size: 15px;
 }
 
-a.searchbutton{
+a.searchbutton {
   height: 40px;
   width: 70px;
   display: flex;
@@ -68,7 +65,7 @@ a.searchbutton{
   border-radius: 10px;
 }
 
-a.searchbutton:hover{
+a.searchbutton:hover {
   background-color: rgb(26, 68, 184);
   color: white;
 }
