@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import CoursesWrapper from "../../components/CoursesWrapper";
 import CourseItem from "../../components/CourseItem";
 import axios from "axios";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, ListGroup } from "react-bootstrap";
 import Filter from "./Filter";
 import CatalogDescription from "../../components/CatalogDescription";
 import Loading from "../../components/Loading";
@@ -166,16 +166,23 @@ function Catalog() {
   } else if (filteredCourses.length !== 0) {
     courseCardsContent = filteredCourses.map((course) => {
       return (
-        <CourseItem
-          key={course.key}
-          uid={course.key}
-          courseName={course.courseName}
-          courseNum={course.courseNum}
-          unit={course.unit}
-          handlerClick={clickCourseItemHandler}
-        />
+        <ListGroup.Item>
+          <CourseItem
+            key={course.key}
+            uid={course.key}
+            courseName={course.courseName}
+            courseNum={course.courseNum}
+            unit={course.unit}
+            handlerClick={clickCourseItemHandler}
+          />
+        </ListGroup.Item>
       );
     });
+    courseCardsContent = (
+      <ListGroup>
+        {courseCardsContent}
+      </ListGroup>
+    );
   }
 
   return (
