@@ -1,7 +1,8 @@
 import React from 'react';
 
 import "../../assets/css/StoryWriter.css";
-import { Form, Container, Row, Col} from 'react-bootstrap'
+import { Form, Container, Row, Col} from 'react-bootstrap';
+import { Remarkable } from 'remarkable';
 import MarkdownIt from 'markdown-it';
 import MdEditor, { Plugins } from 'react-markdown-editor-lite';
 // import style manually
@@ -17,7 +18,6 @@ MdEditor.use(Plugins.TabInsert, {
 
 // Initialize a markdown parser
 const mdParser = new MarkdownIt({
-
 });
 
 class StoryWriter extends React.Component {
@@ -36,6 +36,22 @@ class StoryWriter extends React.Component {
     this.markdownClass = 'writer-panel'
     this.handleChangeView = this.handleChangeView.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
+    this.hljs = require('highlight.js') // https://highlightjs.org/
+    this.md = new Remarkable('full', {
+      html:         true,        // Enable HTML tags in source
+      xhtmlOut:     false,        // Use '/' to close single tags (<br />)
+      breaks:       true,        // Convert '\n' in paragraphs into <br>
+      langPrefix:   'language-',  // CSS language prefix for fenced blocks
+      linkify:      true,         // autoconvert URL-like texts to links
+      linkTarget:   '',           // set target to open link in
+    
+      // Enable some language-neutral replacements + quotes beautification
+      typographer:  false,
+    
+      // Double + single quotes replacement pairs, when typographer enabled,
+      // and smartquotes on. Set doubles to '«»' for Russian, '„“' for German.
+      quotes: '“”‘’',
+    });
   }
 
   handleChangeView() {
@@ -50,12 +66,14 @@ class StoryWriter extends React.Component {
       content_text: text
     })
   }
+
+  
   
   render() {
     return (
       <div>
         <div>
-          <button onClick={this.handleChangeView}></button>
+          <button onClick={this.handleChangeView}>Toggle</button>
         </div>
         <Form>
           <Container>
@@ -101,6 +119,7 @@ class StoryWriter extends React.Component {
             {this.state.showMd && (
               <MdEditor 
               style = {{ marginLeft: '5rem', marginRight: '5rem' }}
+              value = {this.state.content_text}
               markdownClass={this.markdownClass} 
               view={this.state.view} 
               renderHTML={text => mdParser.render(text)} 
@@ -108,7 +127,8 @@ class StoryWriter extends React.Component {
               />
             )}
             {!this.state.showMd && (
-              <div dangerouslySetInnerHTML={{__html: this.state.content_html}} />
+              <div dangerouslySetInnerHTML={{__html: this.md.render(this.state.content_text)}} />
+              // <ReactMarkdown remarkPlugins={[this.gfm]}>{this.state.content_text}</ReactMarkdown>
             )}
             
           </Form.Group>
