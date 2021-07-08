@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import { Redirect } from 'react-router-dom';
+import { useOktaAuth } from '@okta/okta-react';
+import StoryList from './StoryList';
 
-export default function Story() {
-    return (
-        <div>
-            <h1>Story Discover</h1>
-        </div>
-    )
-}
+const Story = () => {
+  const { oktaAuth, authState } = useOktaAuth();
+
+  return !authState || authState.isAuthenticated ?
+    <StoryList/> : <Redirect to={{ pathname: '/' }}/>
+};
+export default Story;
