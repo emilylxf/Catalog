@@ -104,11 +104,63 @@ export default withOktaAuth( class StoryList extends React.Component {
     const config = {
       headers: { Authorization: `Bearer ${this.props.authState.accessToken.accessToken}` }
     };
+    var preRenderList = []
     axios.get(url, config)
       .then(
         function (response) {
+          preRenderList = response.data
+          var mappingList = []
+          var i = 0
+          //Generate mapping list for later article card mapping
+          while (i < preRenderList.length) {
+            var innerList = []
+            for (var j = 0; j < 3; j++) {
+              if (i+j < preRenderList.length) {
+                innerList.push(preRenderList[i+j])
+              }
+            }
+            mappingList.push(innerList)
+            i += 3
+          }
+          var tempList = (
+            <div>
+              {
+                mappingList.map( function(innerList, rowNum) {
+                  return (
+                    <Row key={rowNum}>
+                      {
+                        innerList.map( function(article, colNum) {
+                          return (
+                            <Col key={colNum}>
+                              <Card className="storyCard">
+                                <Card.Body>
+                                  <Card.Title>{article.article_title} ({article.article_id})</Card.Title>
+                                  <Card.Text>
+                                    {article.article_content}
+                                  </Card.Text>
+                                </Card.Body>
+                                <ListGroup className="list-group-flush">
+                                  <ListGroupItem>like: {article.like_count} | view: {article.view_count}</ListGroupItem>
+                                  <ListGroupItem>From: {article.school_from.name} | To: {article.school_to.name}</ListGroupItem>
+                                  <ListGroupItem>Major: {article.major.name}</ListGroupItem>
+                                </ListGroup>
+                                <Card.Body>
+                                  <Card.Link href="#">Enter</Card.Link>
+                                  <Card.Link href="#">Report</Card.Link>
+                                </Card.Body>
+                              </Card>
+                            </Col>
+                          )
+                        })
+                      }
+                    </Row>
+                  )
+                })
+              }
+            </div>
+          )
           this.setState({
-            preRenderList: response.data
+            renderList: tempList
           })
         }.bind(this)
       )
@@ -116,61 +168,6 @@ export default withOktaAuth( class StoryList extends React.Component {
         console.log(error);
         //Perform action based on error
       });
-
-    var mappingList = []
-    var i = 0
-    var preRenderList = []
-    //Generate mapping list for later article card mapping
-    while (i < preRenderList.length) {
-      var innerList = []
-      for (var j = 0; j < 3; j++) {
-        if (i+j < preRenderList.length) {
-          innerList.push(preRenderList[i+j])
-        }
-      }
-      mappingList.push(innerList)
-      i += 3
-    }
-    var tempList = (
-      <div>
-        {
-          mappingList.map( function(innerList, rowNum) {
-            return (
-              <Row key={rowNum}>
-                {
-                  innerList.map( function(article, colNum) {
-                    return (
-                      <Col key={colNum}>
-                        <Card className="storyCard">
-                          <Card.Body>
-                            <Card.Title>{article.article_title} ({article.article_id})</Card.Title>
-                            <Card.Text>
-                              {article.article_content}
-                            </Card.Text>
-                          </Card.Body>
-                          <ListGroup className="list-group-flush">
-                            <ListGroupItem>like: {article.like_count} | view: {article.view_count}</ListGroupItem>
-                            <ListGroupItem>From: {article.school_from.name} | To: {article.school_to.name}</ListGroupItem>
-                            <ListGroupItem>Major: {article.major.name}</ListGroupItem>
-                          </ListGroup>
-                          <Card.Body>
-                            <Card.Link href="#">Enter</Card.Link>
-                            <Card.Link href="#">Report</Card.Link>
-                          </Card.Body>
-                        </Card>
-                      </Col>
-                    )
-                  })
-                }
-              </Row>
-            )
-          })
-        }
-      </div>
-    )
-    this.setState({
-      renderList: tempList
-    })
   }
 
 
