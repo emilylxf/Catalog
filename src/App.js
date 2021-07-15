@@ -11,6 +11,7 @@ import { Route, useHistory, Switch } from "react-router-dom";
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
 import { Security } from '@okta/okta-react';
 import config from './config';
+import StoryDetail from "./pages/story/StoryDetail";
 
 const oktaAuth = new OktaAuth(config.oktaConfig);
 
@@ -35,6 +36,7 @@ export default function App() {
           <Route exact path="/about" render={(routerProps) => < About routerProps={routerProps} />} />
           <Route path='/login' render={() => <Login config={config.oktaSignInConfig} />} />
           <Route path='/story/new' render={() => <StoryWriter/>} />
+          <Route path='/story/:article_id?' render={(routerProps) => < StoryDetail routerProps={routerProps} />} />
         </Switch>
       </Security>
     </div>
