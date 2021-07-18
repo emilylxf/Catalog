@@ -78,7 +78,8 @@ export default withOktaAuth( class StoryList extends React.Component {
                                   <ListGroupItem>Major: {article.major.name}</ListGroupItem>
                                 </ListGroup>
                                 <Card.Body>
-                                  <Card.Link as={Link} to={{pathname: "/story/${article.artiel_id}"}}>
+                                  <Card.Link as={Link} to={{pathname: "/story/"+article.article_id}}>
+                                    Enter
                                   </Card.Link>
                                   <Card.Link href="">Report</Card.Link>
                                 </Card.Body>
