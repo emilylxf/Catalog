@@ -26,19 +26,17 @@ export default withOktaAuth( class StoryList extends React.Component {
   }
 
   updateRenderList(event) {
-    console.log(this.props.oktaAuth.authStateManager._authState)
     if (!this.props.oktaAuth.authStateManager._authState) return null
-    var url = ''
-    if (event == 'all' || event.target.id == 'all') {
-      url = "http://127.0.0.1:5000/story"
-    } else {
-      url = "http://127.0.0.1:5000/story?user_id="+event.target.id
-    }
-    const config = {
-      headers: { Authorization: `Bearer ${this.props.oktaAuth.authStateManager._authState.accessToken.accessToken}` }
+    var config = {
+      headers: { Authorization: `Bearer ${this.props.oktaAuth.authStateManager._authState.idToken.value}` },
+      params: {}
     };
+    if (event == 'all'  || event.target.id == 'all') { 
+    } else {
+      config.params.user_id = event.target.id
+    }
     var preRenderList = []
-    axios.get(url, config)
+    axios.get("http://127.0.0.1:5000/story", config)
       .then(
         function (response) {
           preRenderList = response.data

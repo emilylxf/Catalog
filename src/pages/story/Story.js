@@ -7,6 +7,6 @@ const Story = () => {
   const { oktaAuth, authState } = useOktaAuth();
 
   return !authState || authState.isAuthenticated ?
-    <StoryList/> : <Redirect to={{ pathname: '/' }}/>
+    <StoryList/> : <Redirect to={{ pathname: '/login' }}/>
 };
 export default Story;
