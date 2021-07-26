@@ -4,7 +4,9 @@ import {
   Card, 
   ListGroup, 
   ListGroupItem, 
-  Dropdown,
+  Modal,
+  Container,
+  Form,
   Button,
   Row,
   Col
@@ -20,7 +22,8 @@ export default withOktaAuth( class StoryList extends React.Component {
     this.state = {
       renderList: [],
       colNum: 3,         //number of columns a row could contain cards
-      rendered: false
+      rendered: false,
+      filter: {}
     };
     this.updateRenderList = this.updateRenderList.bind(this);
   }
@@ -130,17 +133,52 @@ export default withOktaAuth( class StoryList extends React.Component {
           </Link>
         </div>
         <div>
-          <Dropdown>
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
-              Example filter
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={this.updateRenderList} id="1">user_id=1</Dropdown.Item>
-              <Dropdown.Item onClick={this.updateRenderList} id="2">user_id=3</Dropdown.Item>
-              <Dropdown.Item onClick={this.updateRenderList} id="all">display all</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+          <Form>
+            <Container>
+              <Row className="modal_item">
+                <Col>
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    name="name"
+                    type="text"
+                    value={this.state.name}
+                    placeholder="Name"
+                    onChange={this.handleInputChange}
+                  ></Form.Control>
+                </Col>
+                <Col>
+                  <Form.Label>Email Address</Form.Label>
+                  <Form.Control
+                    name="email"
+                    type="email"
+                    value={this.state.email}
+                    placeholder="Email Address"
+                    onChange={this.handleInputChange}
+                  ></Form.Control>
+                </Col>
+                <Col>
+                  <Form.Label>Email Address</Form.Label>
+                  <Form.Control
+                    name="email"
+                    type="email"
+                    value={this.state.email}
+                    placeholder="Email Address"
+                    onChange={this.handleInputChange}
+                  ></Form.Control>
+                </Col>
+                <Col>
+                  <Form.Label>Email Address</Form.Label>
+                  <Form.Control
+                    name="email"
+                    type="email"
+                    value={this.state.email}
+                    placeholder="Email Address"
+                    onChange={this.handleInputChange}
+                  ></Form.Control>
+                </Col>
+              </Row>
+            </Container>
+          </Form>
         </div>
         <div className="storyList">
           {this.state.renderList}
