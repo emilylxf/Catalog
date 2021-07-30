@@ -4,7 +4,9 @@ import {
   Card, 
   ListGroup, 
   ListGroupItem, 
-  Dropdown,
+  Modal,
+  Container,
+  Form,
   Button,
   Row,
   Col
@@ -20,25 +22,24 @@ export default withOktaAuth( class StoryList extends React.Component {
     this.state = {
       renderList: [],
       colNum: 3,         //number of columns a row could contain cards
-      rendered: false
+      rendered: false,
+      filter: {}
     };
     this.updateRenderList = this.updateRenderList.bind(this);
   }
 
   updateRenderList(event) {
-    console.log(this.props.oktaAuth.authStateManager._authState)
     if (!this.props.oktaAuth.authStateManager._authState) return null
-    var url = ''
-    if (event == 'all' || event.target.id == 'all') {
-      url = "http://127.0.0.1:5000/story"
-    } else {
-      url = "http://127.0.0.1:5000/story?user_id="+event.target.id
-    }
-    const config = {
-      headers: { Authorization: `Bearer ${this.props.oktaAuth.authStateManager._authState.accessToken.accessToken}` }
+    var config = {
+      headers: { Authorization: `Bearer ${this.props.oktaAuth.authStateManager._authState.idToken.value}` },
+      params: {}
     };
+    if (event == 'all'  || event.target.id == 'all') { 
+    } else {
+      config.params.user_id = event.target.id
+    }
     var preRenderList = []
-    axios.get(url, config)
+    axios.get("http://127.0.0.1:5000/story", config)
       .then(
         function (response) {
           preRenderList = response.data
@@ -132,17 +133,52 @@ export default withOktaAuth( class StoryList extends React.Component {
           </Link>
         </div>
         <div>
-          <Dropdown>
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
-              Example filter
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={this.updateRenderList} id="1">user_id=1</Dropdown.Item>
-              <Dropdown.Item onClick={this.updateRenderList} id="2">user_id=3</Dropdown.Item>
-              <Dropdown.Item onClick={this.updateRenderList} id="all">display all</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+          <Form>
+            <Container>
+              <Row className="modal_item">
+                <Col>
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    name="name"
+                    type="text"
+                    value={this.state.name}
+                    placeholder="Name"
+                    onChange={this.handleInputChange}
+                  ></Form.Control>
+                </Col>
+                <Col>
+                  <Form.Label>Email Address</Form.Label>
+                  <Form.Control
+                    name="email"
+                    type="email"
+                    value={this.state.email}
+                    placeholder="Email Address"
+                    onChange={this.handleInputChange}
+                  ></Form.Control>
+                </Col>
+                <Col>
+                  <Form.Label>Email Address</Form.Label>
+                  <Form.Control
+                    name="email"
+                    type="email"
+                    value={this.state.email}
+                    placeholder="Email Address"
+                    onChange={this.handleInputChange}
+                  ></Form.Control>
+                </Col>
+                <Col>
+                  <Form.Label>Email Address</Form.Label>
+                  <Form.Control
+                    name="email"
+                    type="email"
+                    value={this.state.email}
+                    placeholder="Email Address"
+                    onChange={this.handleInputChange}
+                  ></Form.Control>
+                </Col>
+              </Row>
+            </Container>
+          </Form>
         </div>
         <div className="storyList">
           {this.state.renderList}

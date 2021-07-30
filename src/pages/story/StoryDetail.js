@@ -1,21 +1,16 @@
 import React from 'react';
 import axios from 'axios'
 import {
-    Modal, 
-    Button, 
-    Form, 
-    Container, 
     Row, 
     Col
   } from 'react-bootstrap';
-import { useOktaAuth, withOktaAuth } from '@okta/okta-react';
+import { withOktaAuth } from '@okta/okta-react';
 import '../../assets/css/StoryDetail.css'
 import 'bootstrap'
 
 export default withOktaAuth( class StoryDetail extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       articleId: this.props.routerProps.match.params.article_id,
       dataFetched: false
@@ -23,11 +18,10 @@ export default withOktaAuth( class StoryDetail extends React.Component {
   }
 
   componentDidMount() {
-    axios.get("http://127.0.0.1:5000/story?story_id="+this.state.articleId, 
-      {headers: { Authorization: `Bearer ${this.props.authState.accessToken.accessToken}` }})
+    axios.get("http://127.0.0.1:5000/story?article_id="+this.state.articleId, 
+      {headers: { Authorization: `Bearer ${this.props.oktaAuth.authStateManager._authState.idToken.value}` }})
       .then(
         function (response) {
-            console.log(response)
             this.setState({
               articleDetail: response.data[0],
               dataFetched: true
