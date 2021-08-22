@@ -8,6 +8,7 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
+import './css/catalog.css'
 
 class Filter extends React.Component {
   constructor(props) {
@@ -73,78 +74,67 @@ class Filter extends React.Component {
 
   render() {
     return (
-      <Modal.Dialog>
-        <Modal.Header>
-          <Modal.Title className="center_title">Course Filter</Modal.Title>
-        </Modal.Header>
+      <div className={'content-center'}>
+        <div className="line-select line-select-top">
+          <div className={'col-common'}>
+            <h5>
+              Campus:
+            </h5>
+            <DropdownButton variant={'danger'} as={ButtonGroup} title={this.state.campus}>
+              <Dropdown.Item onClick={this.handleSelect} id="campus:DeAnza">
+                DeAnza
+              </Dropdown.Item>
+              <Dropdown.Item onClick={this.handleSelect} id="campus:Foothill">
+                Foothill (Coming Soon)
+              </Dropdown.Item>
+            </DropdownButton>
+          </div>
+<div className={'col-common'}>
+            <h5>
+              Quarter:
+            </h5>
+            <DropdownButton variant={'danger'} as={ButtonGroup} title={this.state.quarter}>
+              <Dropdown.Item onClick={this.handleSelect} id="quarter:Fall">
+                Fall
+              </Dropdown.Item>
+              <Dropdown.Item onClick={this.handleSelect} id="quarter:Winter">
+                Winter
+              </Dropdown.Item>
+              <Dropdown.Item onClick={this.handleSelect} id="quarter:Spring">
+                Spring
+              </Dropdown.Item>
+              <Dropdown.Item onClick={this.handleSelect} id="quarter:Summer">
+                Summer
+              </Dropdown.Item>
+            </DropdownButton>
+          </div>
+        </div>
 
-        <Modal.Body>
-          <Row className="modal_item">
-            <Col>
-              <h5>Campus: </h5>
-            </Col>
-            <Col>
-              <DropdownButton as={ButtonGroup} title={this.state.campus}>
-                <Dropdown.Item onClick={this.handleSelect} id="campus:DeAnza">
-                  DeAnza
-                </Dropdown.Item>
-                <Dropdown.Item onClick={this.handleSelect} id="campus:Foothill">
-                  Foothill (Coming Soon)
-                </Dropdown.Item>
-              </DropdownButton>
-            </Col>
-          </Row>
-          <Row className="modal_item">
-            <Col>
-              <h5>Year: </h5>
-            </Col>
-            <Col>
-              <DropdownButton as={ButtonGroup} title={this.state.year}>
-                <Dropdown.Item onClick={this.handleSelect} id="year:2021">
-                  2021 (Usable)
-                </Dropdown.Item>
-                <Dropdown.Item onClick={this.handleSelect} id="year:1998">
-                  1998 (Not Available)
-                </Dropdown.Item>
-              </DropdownButton>
-            </Col>
-          </Row>
-          <Row className="modal_item">
-            <Col>
-              <h5>Quarter: </h5>
-            </Col>
-            <Col>
-              <DropdownButton as={ButtonGroup} title={this.state.quarter}>
-                <Dropdown.Item onClick={this.handleSelect} id="quarter:Fall">
-                  Fall
-                </Dropdown.Item>
-                <Dropdown.Item onClick={this.handleSelect} id="quarter:Winter">
-                  Winter
-                </Dropdown.Item>
-                <Dropdown.Item onClick={this.handleSelect} id="quarter:Spring">
-                  Spring
-                </Dropdown.Item>
-                <Dropdown.Item onClick={this.handleSelect} id="quarter:Summer">
-                  Summer
-                </Dropdown.Item>
-              </DropdownButton>
-            </Col>
-          </Row>
-          <Row>
-            <div>
-              <label className="form-label" htmlFor="courseSearch">
-                <h5>Search Course</h5>
-              </label>
-              <input
-                type="text"
-                id="courseSearch"
-                className="form-control"
-                onChange={this.props.searchCourseHandler}
-              />
-            </div>
-          </Row>
-        </Modal.Body>
-      </Modal.Dialog>
+        <div className={'ccs'}>
+          <label className="form-label" htmlFor="courseSearch">
+            <h5>Search Course</h5>
+          </label>
+          <input
+            type="text"
+            id="courseSearch"
+            className="form-control"
+            onChange={this.props.searchCourseHandler}
+          />
+        </div>
+
+        <div className="col-common">
+          <h5>Year: </h5>
+          <DropdownButton variant={'dark'} as={ButtonGroup} title={this.state.year}>
+            <Dropdown.Item onClick={this.handleSelect} id="year:2021">
+              2021 (Usable)
+            </Dropdown.Item>
+            <Dropdown.Item onClick={this.handleSelect} id="year:1998">
+              1998 (Not Available)
+            </Dropdown.Item>
+          </DropdownButton>
+        </div>
+      </div>
+
     );
   }
 }

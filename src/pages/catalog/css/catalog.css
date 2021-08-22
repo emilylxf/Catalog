@@ -1,0 +1,24 @@
+.col-common {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+.line-select {
+  display: flex;
+  /*justify-content: left;*/
+}
+.line-select-top {
+  margin-top: 40px;
+}
+
+.content-center {
+  margin: auto;
+  width: 800px;
+  text-align: left;
+}
+.content-course {
+  width: 800px;
+  margin: auto;
+  overflow: auto;
+  max-height: 400px;
+}
